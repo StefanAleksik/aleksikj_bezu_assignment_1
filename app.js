@@ -4,11 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var SpotifyWebApi = require('spotify-web-api-node');
+
+// credentials are optional
+var spotifyApi = new SpotifyWebApi({
+    clientId : 'fcecfc72172e4cd267473117a17cbd4d',
+    clientSecret : 'a6338157c9bb5ac9c71924cb2940e1a7',
+    redirectUri : 'http://www.example.com/callback'
+});
 
 var db = require('./models/db');
 var User = require('./models/User')
 var index = require('./routes/index');
 var users = require('./routes/users');
+var spotifydata = require('./routes/spotifydata');
 
 var app = express();
 
@@ -29,7 +38,7 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 app.use('/', index);
 app.use('/users', users);
-
+app.use('/spotifydata', spotifydata);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

@@ -11,12 +11,13 @@ router.post('/adduser', function (req, res, next) {
 
        console.log('User created!');
    });
-   res.redirect("/");
+   res.redirect("/spotifydata");
 });
-module.exports = router;
+
 
 router.get('/thread', function(req, res) {
     User.find(function(err, threads) {
         res.send(threads);
     });
-})
+});
+module.exports = router;
