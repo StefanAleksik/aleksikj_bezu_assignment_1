@@ -6,18 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var SpotifyWebApi = require('spotify-web-api-node');
 
-// credentials are optional
-var spotifyApi = new SpotifyWebApi({
-    clientId : '4feeba43e6634d019efb83b3fdc7fe31',
-    clientSecret : 'b8401d1bb1b94c1280faa4f54d77da27',
-    redirectUri : 'http://localhost:8888/callback'
-});
-
 var db = require('./models/db');
 var User = require('./models/User')
 var index = require('./routes/index');
 var users = require('./routes/users');
 var spotifydata = require('./routes/spotifydata');
+var spotifylogin = require('./routes/spotifylogin');
+var spotifycallback = require('./routes/spotifycallback');
 
 var app = express();
 
@@ -39,6 +34,8 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/', index);
 app.use('/users', users);
 app.use('/spotifydata', spotifydata);
+app.use('/spotifylogin', spotifylogin);
+app.use('/spotifycallback', spotifycallback);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
