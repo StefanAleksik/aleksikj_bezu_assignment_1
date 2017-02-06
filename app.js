@@ -9,8 +9,6 @@ var SpotifyWebApi = require('spotify-web-api-node');
 var db = require('./models/db');
 var User = require('./models/User')
 var index = require('./routes/index');
-var users = require('./routes/users');
-var spotifydata = require('./routes/spotifydata');
 var spotifylogin = require('./routes/spotifylogin');
 var spotifycallback = require('./routes/spotifycallback');
 
@@ -32,8 +30,6 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redi
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
 app.use('/', index);
-app.use('/users', users);
-app.use('/spotifydata', spotifydata);
 app.use('/spotifylogin', spotifylogin);
 app.use('/spotifycallback', spotifycallback);
 // catch 404 and forward to error handler

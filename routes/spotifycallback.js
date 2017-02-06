@@ -30,19 +30,19 @@ router.get('/', function(req, res, next) {
             });*/
         spotifyApi.getFollowedArtists({ limit : 50 })
             .then(function(artist) {
-              /*  for (var i =0; i < artist.body.artists.items.length; i++){
+                for (var i =0; i < artist.body.artists.items.length; i++){
                     console.log('name: ' + artist.body.artists.items[i].name + ', spotify id: ' + artist.body.artists.items[i].id + ', popularity: ' + artist.body.artists.items[i].popularity);
-                }*/
+                }
             }, function(err) {
                 console.log('Something went wrong!', err);
             });
         spotifyApi.getMySavedTracks({limit : 50})
             .then(function(track) {
-            /*    for (var i =0; i < track.body.items.length; i++){
+                for (var i =0; i < track.body.items.length; i++){
                  console.log('Song name: ' + track.body.items[i].track.name + ', Song spotify id: ' + track.body.items[i].track.id + ', Song album-name: ' + track.body.items[i].track.album.name + ', Album  spotify-id: ' + track.body.items[i].track.album.id
                  + ', Album artist  spotify-id: ' + track.body.items[i].track.artists[0].id + ', Album artist-name: ' + track.body.items[i].track.artists[0].name);
                  }
-            */}, function(err) {
+            }, function(err) {
                 console.log('Something went wrong!', err);
             });
         spotifyApi.getUserPlaylists(data.body.id)

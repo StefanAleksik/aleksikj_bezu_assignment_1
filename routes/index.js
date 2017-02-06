@@ -11,7 +11,7 @@ router.post('/adduser', function (req, res, next) {
 
        console.log('User created!');
    });
-   res.redirect("/spotifydata");
+   res.redirect("/thread");
 });
 
 
