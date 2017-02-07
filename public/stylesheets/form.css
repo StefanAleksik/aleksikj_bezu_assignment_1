@@ -33,12 +33,13 @@ input, select {
     max-width: 350px;
     padding: 15px;
     box-shadow: 0 0 10px rgb(142, 238, 29);
-    margin: 7px auto;
+    margin: 10px auto;
     border-radius: 15px;
     background-color: ivory;
 
 }
 .form-signup-spotify a{display: block;}
+
 @media (min-width: 768px){
     .form-inline .form-control{
         width: 49.37988%;
