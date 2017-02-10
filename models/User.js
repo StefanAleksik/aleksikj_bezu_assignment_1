@@ -6,7 +6,9 @@ var userSchema = new Schema({
     age: Number,
     gender: String,
     music: Array,
-    none: String
+    spotifyID: String,
+    email: String,
+    lastFmId: String
 }, {
     versionKey: false // You should be aware of the outcome after set to false
 });

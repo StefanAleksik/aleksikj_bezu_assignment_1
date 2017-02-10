@@ -38,6 +38,15 @@ input, select {
     background-color: ivory;
 
 }
+.form-signup-spotify-blue {
+    max-width: 350px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgb(50, 49, 238);
+    margin: 10px auto;
+    border-radius: 15px;
+    background-color: ivory;
+
+}
 .form-signup-spotify a{display: block;}
 
 @media (min-width: 768px){

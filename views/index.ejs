@@ -1,21 +1,24 @@
 <% include template/head.ejs%>
   <body>
-  <div class="container"> <div class="form-signup">
-      <form class="form-inline" name="adduser" method="post" action="/adduser">
-          <div class="form-group">
-              <h2 class="form-signin-heading">Please sign up</h2>
-              <label for="name" class="sr-only">Name</label>
-              <input type="text" class="form-control" placeholder="Name" name="name" required autofocus>
-              <label for="surname" class="sr-only">Surname</label>
-              <input type="text" class="form-control" placeholder="Surname" name="surname">
-              <label class="sr-only" for="age">Age</label>
-              <input class="form-control" type="number" placeholder="Age" name="age" min="15" max="100" required>
-              <select class="form-control" name="gender"required>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-              </select>
-          </div>
+
+  <div class="container">
+      <% if(userName == null){ %>
+      <div id="form_signup" class="form-signup">
+          <form class="form-inline" name="adduser" method="post" action="/adduser">
+              <div class="form-group">
+                  <h2 class="form-signin-heading">Please sign up</h2>
+                  <label for="name" class="sr-only">Name</label>
+                  <input type="text" class="form-control" placeholder="Name" name="name" required autofocus>
+                  <label for="surname" class="sr-only">Surname</label>
+                  <input type="text" class="form-control" placeholder="Surname" name="surname">
+                  <label class="sr-only" for="age">Age</label>
+                  <input class="form-control" type="number" placeholder="Age" name="age" min="15" max="100" required>
+                  <select class="form-control" name="gender" required>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                  </select>
+              </div>
 
 
               <legend>Music preference:</legend>
@@ -38,18 +41,32 @@
                   <input type="checkbox" name="music" value="heavymetal">Heavy Metal<br>
               </label><br>
 
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Submit form</button>
-      </form>
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Submit form</button>
+          </form>
       </div>
+
+      <%} else if (userName && spotifySet == null) {%>
       <div class="form-signup-spotify">
-      <div id="login">
-          <a href="/spotifylogin" class="btn btn-lg btn-primary ">Log in with Spotify</a>
+          <div id="login">
+              <%= spotifySet%>
+              <a href="/spotifylogin" class="btn btn-lg btn-primary ">Log in with Spotify</a>
+          </div>
       </div>
-      </div>
+
+      <%}
+      else { %>
       <div class="form-signup-spotify">
           <div id="login">
               <a href="#" class="btn btn-lg btn-primary ">Log in with LastFM</a>
           </div>
       </div>
+
+     <% }
+      %>
+
+
+
+
+
   </div>
 <% include template/footer.ejs%>
