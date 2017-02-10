@@ -27,7 +27,14 @@ router.get('/', function(req, res, next) {
             // we have the updated user returned to us
             console.log(user);
         });
+        console.log("SESSION")
+
         req.session.spotifySet = data.body.id;
+
+        res.redirect("/");
+
+
+
         spotifyApi.getFollowedArtists({ limit : 50 })
          .then(function(artist) {
              var limit = 50;
@@ -35,7 +42,7 @@ router.get('/', function(req, res, next) {
              var total = artist.body.artists.total;
              var counter = 1;
              var uplimit = Math.ceil(total/limit);
-             var followedArtists ={spotify_id: data.body.id ,artists: []};
+             var followedArtists ={artists: []};
              var fields = ['artist_name', 'artist_spotify_id', 'artist_popularity'];
              if (total <= 50){
                  for (var i =0; i < artist.body.artists.items.length; i++){
@@ -43,8 +50,8 @@ router.get('/', function(req, res, next) {
                     followedArtists.artists.push({artist_name: artist.body.artists.items[i].name, artist_spotify_id: artist.body.artists.items[i].id, artist_popularity: artist.body.artists.items[i].popularity});
                  counter++;
                     if (counter == artist.body.artists.items.length){
-                     //sendData.sendData(data.body.id, 'spotify', 'followed-artists', fields, followedArtists.artists)
-                        console.log(followedArtists);
+                      sendData.sendData(data.body.id, 'spotify', 'followed-artists', fields, followedArtists.artists);
+                       console.log(followedArtists);
                  }
                  }
              } else {for (var ii = 0; ii < uplimit; ii++){
@@ -108,16 +115,32 @@ router.get('/', function(req, res, next) {
 
         spotifyApi.getUserPlaylists(data.body.id)
             .then(function(playlist) {
-                return playlist.body.items.map(function(p) { return p.id; });
-            }).then(function (playlist_track) {
+                //console.log(playlist.body.items)
+                var playlistsNew = []
+                for (var i=0;i<playlist.body.items.length;i++){
+                    if(playlist.body.items[i].owner.id === data.body.id){
+                        playlistsNew.push({id:playlist.body.items[i].id, name:playlist.body.items[i].name, songs:[]})
+                    }
+
+                }
+
+                getPlaylistsWithSongs(0,playlistsNew,data.body.id,function(){
+                    console.log("Done")
+                   // console.log(playlistsNew)
+
+                })
+                //return playlist.body.items.map(function(p) { return p.id; });
+            })
+
+        /*.then(function (playlist_track) {
             var spotifyUserPlaylist = {spotify_id: data.body.id, playlist_song: []};
                 for(var i = 0; i < playlist_track.length; i++){
                     console.log(playlist_track[i]);
-                    var playListId = '';
-                    playListId += playlist_track[i];
+                    var playListId = playlist_track[i];
+                    //playListId += playlist_track[i];
                     spotifyApi.getPlaylistTracks(data.body.id, playlist_track[i], {limit: 100})
                         .then(function(playlist_track_track) {
-                        //console.log(playlist_track[i]);
+                            console.log("id" + playListId);
                             for (var ii = 0; ii <playlist_track_track.body.items.length; ii++){
                                 spotifyUserPlaylist.playlist_song.push({song_name: playlist_track_track.body.items[ii].track.name});
                                 //console.log(playlist_track_track.body.items[ii].track.name);
@@ -134,12 +157,37 @@ router.get('/', function(req, res, next) {
 
         }).catch(function(error) {
             console.error(error);
-        });
+        });*/
         //return spotifyApi.getUserPlaylists(data.body.id)
+
+
     }), function (err) {
         res.status(err.code);
         res.send(err.message);
     }
-    res.redirect("/");
+
 });
+
+function getPlaylistsWithSongs(index,playlists,spotify_id,callback){
+
+    spotifyApi.getPlaylistTracks(spotify_id, playlists[index].id, {limit: 100})
+        .then(function(tracks) {
+
+            console.log(tracks)
+            playlists[index].songs.push(tracks)
+
+            index++
+            if(index<playlists.length){
+                getPlaylistsWithSongs(index,playlists,spotify_id,callback)
+            }
+            else{
+                callback()
+            }
+
+        }, function(err) {
+            console.log('Something went wrong!', err);
+        });
+
+}
+
 module.exports = router;
