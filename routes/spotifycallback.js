@@ -16,7 +16,7 @@ var spotifyApi = new SpotifyWebApi({
 });
 var sendData = require('./sendData');
 router.get('/', function(req, res, next) {
-   // res.send(req.query.code);
+
     spotifyApi.authorizationCodeGrant(req.query.code).then(function (data) {
         spotifyApi.setAccessToken(data.body.access_token);
         return spotifyApi.getMe();
@@ -25,15 +25,11 @@ router.get('/', function(req, res, next) {
         User.findOneAndUpdate({$and: [{name: req.session.userName}, {surname: req.session.userSurname}]  }, {  spotifyID: data.body.id, email: data.body.email }, function(err, user) {
             if (err) throw err;
             // we have the updated user returned to us
-            console.log(user);
+            //console.log(user);
         });
-        console.log("SESSION")
-
         req.session.spotifySet = data.body.id;
 
         res.redirect("/");
-
-
 
         spotifyApi.getFollowedArtists({ limit : 50 })
          .then(function(artist) {
@@ -50,8 +46,8 @@ router.get('/', function(req, res, next) {
                     followedArtists.artists.push({artist_name: artist.body.artists.items[i].name, artist_spotify_id: artist.body.artists.items[i].id, artist_popularity: artist.body.artists.items[i].popularity});
                  counter++;
                     if (counter == artist.body.artists.items.length){
-                      sendData.sendData(data.body.id, 'spotify', 'followed-artists', fields, followedArtists.artists);
-                       console.log(followedArtists);
+                      /*sendData.sendData(data.body.id, 'spotify', 'followed-artists', fields, followedArtists.artists);*/
+                       console.log('number of followed artist ' + followedArtists.artists.length);
                  }
                  }
              } else {for (var ii = 0; ii < uplimit; ii++){
@@ -62,7 +58,8 @@ router.get('/', function(req, res, next) {
                              followedArtists.artists.push({artist_name: artists.body.artists.items[i].name, artist_spotify_id: artists.body.artists.items[i].id, artist_popularity: artists.body.artists.items[i].popularity});
                              counter++;
                              if (counter == artists.body.artists.items.length){
-                                 console.log(followedArtists);
+                                 /*sendData.sendData(data.body.id, 'spotify', 'followed-artists', fields, followedArtists.artists);*/
+                                 console.log('number of followed artist' + followedArtists.artists.length);
                              }
                          }
                      }, function(err) {
@@ -80,26 +77,29 @@ router.get('/', function(req, res, next) {
                 var offset_offset = 0;
                 var total = track.body.total;
                 var uplimit = Math.ceil(total/limit);
-                var savedTracks ={spotify_id: data.body.id ,songs: []};
+                var savedTracks ={songs: []};
+                var fileds = ['song_name', 'song_spotify_id', 'song_album_name', 'album_spotify_id', 'song_artist_name', 'song_artist_spotify_id'];
                 if (total <= limit){
                     for (var i =0; i < tracks.body.items.length; i++){
                         savedTracks.songs.push({song_name: tracks.body.items[i].track.name, song_spotify_id: tracks.body.items[i].track.id, song_album_name: tracks.body.items[i].track.album.name, album_spotify_id: tracks.body.items[i].track.album.id,
                             song_artist_name: tracks.body.items[i].track.artists[0].name, song_artist_spotify_id: tracks.body.items[i].track.artists[0].id});
                         counter++;
                         if (counter == savedTracks.songs.length){
-                            console.log("Data ready to be send");
+                            console.log('number of saved sonngs ' + savedTracks.songs.length);
+                            //sendData.sendData(data.body.id, 'spotify', saved-tracks, fileds, savedTracks.songs);
                         }
                     }
                 } else {
                    for (var ii = 0; ii < uplimit; ii++){
                         spotifyApi.getMySavedTracks({limit: 50, offset: offset_offset}).then(function (trackss) {
-                            console.log('YO YO YO');
+
                             for (var i =0; i < trackss.body.items.length; i++){
                                 savedTracks.songs.push({song_name: trackss.body.items[i].track.name, song_spotify_id: trackss.body.items[i].track.id, song_album_name: trackss.body.items[i].track.album.name, album_spotify_id: trackss.body.items[i].track.album.id,
                                 song_artist_name: trackss.body.items[i].track.artists[0].name, song_artist_spotify_id: trackss.body.items[i].track.artists[0].id});
                                 counter++;
                                 if (total == savedTracks.songs.length){
-                                    console.log(savedTracks.songs.length);
+                                    console.log('number of saved sonngs ' + savedTracks.songs.length);
+                                    //sendData.sendData(data.body.id, 'spotify', saved-tracks, fileds, savedTracks.songs);
                                 }
                             }
 
@@ -107,7 +107,7 @@ router.get('/', function(req, res, next) {
                             console.log('Something went wrong!', err);
                         });
                         offset_offset += limit;
-                    } console.log('HI there');
+                    }
                 }
             }, function(err) {
                 console.log('Something went wrong!', err);
@@ -116,52 +116,24 @@ router.get('/', function(req, res, next) {
         spotifyApi.getUserPlaylists(data.body.id)
             .then(function(playlist) {
                 //console.log(playlist.body.items)
-                var playlistsNew = []
+                var playlistsNew = [];
                 for (var i=0;i<playlist.body.items.length;i++){
                     if(playlist.body.items[i].owner.id === data.body.id){
                         playlistsNew.push({id:playlist.body.items[i].id, name:playlist.body.items[i].name, songs:[]})
                     }
-
                 }
-
                 getPlaylistsWithSongs(0,playlistsNew,data.body.id,function(){
-                    console.log("Done")
-                   // console.log(playlistsNew)
+                    //console.log("Done");
+                    console.log(playlistsNew.length);
+                    for (var ii = 0; ii < playlistsNew.length; ii++){
+                        console.log(playlistsNew[ii].songs.items);
 
-                })
+                    }
+
+                });
                 //return playlist.body.items.map(function(p) { return p.id; });
-            })
-
-        /*.then(function (playlist_track) {
-            var spotifyUserPlaylist = {spotify_id: data.body.id, playlist_song: []};
-                for(var i = 0; i < playlist_track.length; i++){
-                    console.log(playlist_track[i]);
-                    var playListId = playlist_track[i];
-                    //playListId += playlist_track[i];
-                    spotifyApi.getPlaylistTracks(data.body.id, playlist_track[i], {limit: 100})
-                        .then(function(playlist_track_track) {
-                            console.log("id" + playListId);
-                            for (var ii = 0; ii <playlist_track_track.body.items.length; ii++){
-                                spotifyUserPlaylist.playlist_song.push({song_name: playlist_track_track.body.items[ii].track.name});
-                                //console.log(playlist_track_track.body.items[ii].track.name);
-                                if (ii == playlist_track_track.body.items.length - 1){
-                                    console.log(spotifyUserPlaylist.playlist_song.length);
-                                    //console.log(playListId);
-                                }
-                            }
-                        }, function(err) {
-                            console.log('Something went wrong!', err);
-                        });
-
-                }
-
-        }).catch(function(error) {
-            console.error(error);
-        });*/
-        //return spotifyApi.getUserPlaylists(data.body.id)
-
-
-    }), function (err) {
+            });
+   }), function (err) {
         res.status(err.code);
         res.send(err.message);
     }
@@ -173,10 +145,10 @@ function getPlaylistsWithSongs(index,playlists,spotify_id,callback){
     spotifyApi.getPlaylistTracks(spotify_id, playlists[index].id, {limit: 100})
         .then(function(tracks) {
 
-            console.log(tracks)
-            playlists[index].songs.push(tracks)
+            //console.log(tracks.body.items);
+            playlists[index].songs.push(tracks);
 
-            index++
+            index++;
             if(index<playlists.length){
                 getPlaylistsWithSongs(index,playlists,spotify_id,callback)
             }

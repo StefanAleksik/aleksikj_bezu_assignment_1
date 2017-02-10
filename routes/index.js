@@ -4,9 +4,7 @@ var router = express.Router();
 var User = require('../models/User');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log("SESSION2")
-  console.log(req.session)
-  res.render('index', { title: 'Assig 1', userName: req.session.userName || null, userSurname: req.session.userSurname || null, spotifySet: req.session.spotifySet || null});
+    res.render('index', { title: 'Assig 1', userName: req.session.userName || null, userSurname: req.session.userSurname || null, spotifySet: req.session.spotifySet || null});
 });
 router.post('/adduser', function (req, res, next) {
     req.session.userName = req.body.name;
