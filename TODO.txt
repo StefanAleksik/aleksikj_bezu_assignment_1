@@ -1,0 +1,6 @@
+1. Add LastFm session and use it for the UI
+2. Add LastFM ID to the DB
+3. Send the current DB as CSV
+4. Fix get playlist tracks
+5. Send playlist tracks
+6. Optimise spotifycallback

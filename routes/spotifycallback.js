@@ -126,7 +126,7 @@ router.get('/', function(req, res, next) {
                     //console.log("Done");
                     console.log(playlistsNew.length);
                     for (var ii = 0; ii < playlistsNew.length; ii++){
-                        console.log(playlistsNew[ii].songs.items);
+                        console.log(playlistsNew[ii]);
 
                     }
 
@@ -146,7 +146,7 @@ function getPlaylistsWithSongs(index,playlists,spotify_id,callback){
         .then(function(tracks) {
 
             //console.log(tracks.body.items);
-            playlists[index].songs.push(tracks);
+            playlists[index].songs.push(tracks.body.items);
 
             index++;
             if(index<playlists.length){
