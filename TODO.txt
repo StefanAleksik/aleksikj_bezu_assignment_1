@@ -4,3 +4,8 @@
 4. Fix get playlist tracks
 5. Send playlist tracks
 6. Optimise spotifycallback
+7. Add different lang http://markocen.github.io/blog/i18n-for-node-application.html
+8. Host the site
+9. Add gravatar
+
+
