@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var SpotifyWebApi = require('spotify-web-api-node');
+var forEach = require('async-foreach').forEach;
 
 var db = require('./models/db');
 var User = require('./models/User')

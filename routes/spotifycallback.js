@@ -14,6 +14,7 @@ var spotifyApi = new SpotifyWebApi({
     clientSecret : 'b8401d1bb1b94c1280faa4f54d77da27',
     redirectUri : 'http://localhost:3000/spotifycallback'
 });
+var forEach = require('async-foreach').forEach;
 var sendData = require('./sendData');
 router.get('/', function(req, res, next) {
 
@@ -124,10 +125,16 @@ router.get('/', function(req, res, next) {
                 }
                 getPlaylistsWithSongs(0,playlistsNew,data.body.id,function(){
                     //console.log("Done");
-                    console.log(playlistsNew.length);
-                    for (var ii = 0; ii < playlistsNew.length; ii++){
-                        console.log(playlistsNew[ii]);
+                    //console.log(playlistsNew.);
 
+                    for (var ii = 0; ii < playlistsNew.length; ii++){
+                        //console.log(playlistsNew[ii].songs[3]);
+                        forEach(playlistsNew[ii].songs, function(e, index, arr){
+                            console.log(playlistsNew[ii].name +' ' + e.song_name + index);
+                            if((playlistsNew[ii].songs - 1) == index){
+                                console.log('Data ready to be sent'); // Create a json object and run it with SendData
+                            }
+                        })
                     }
 
                 });
@@ -145,8 +152,13 @@ function getPlaylistsWithSongs(index,playlists,spotify_id,callback){
     spotifyApi.getPlaylistTracks(spotify_id, playlists[index].id, {limit: 100})
         .then(function(tracks) {
 
-            //console.log(tracks.body.items);
-            playlists[index].songs.push(tracks.body.items);
+            //console.log('number of songs in playlist ' + tracks.body.items.length);
+            for (var iii = 0; iii < tracks.body.items.length; iii++ ){
+                playlists[index].songs.push({song_name: tracks.body.items[iii].track.name, song_spotify_id: tracks.body.items[iii].track.id,
+                song_album_name: tracks.body.items[iii].track.album.name, song_album_spotify_id: tracks.body.items[iii].track.album.id,
+                song_artists_name: tracks.body.items[iii].track.artists[0].name, song_artists_spotify_id: tracks.body.items[iii].track.artists[0].id});
+            }
+
 
             index++;
             if(index<playlists.length){
