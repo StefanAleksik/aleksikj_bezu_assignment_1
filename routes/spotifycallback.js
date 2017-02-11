@@ -129,10 +129,12 @@ router.get('/', function(req, res, next) {
 
                     for (var ii = 0; ii < playlistsNew.length; ii++){
                         //console.log(playlistsNew[ii].songs[3]);
+                        var playlistSongs = [];
                         forEach(playlistsNew[ii].songs, function(e, index, arr){
-                            console.log(playlistsNew[ii].name +' ' + e.song_name + index);
-                            if((playlistsNew[ii].songs - 1) == index){
-                                console.log('Data ready to be sent'); // Create a json object and run it with SendData
+                            /*console.log(playlistsNew[ii].name +' ' + e.song_name + index);*/
+                            playlistSongs.push({playlist_name: playlistsNew[ii].name, song_name: e.song_name});
+                            if(playlistsNew[ii].songs.length == playlistSongs.length){
+                                console.log(playlistSongs); // Create a json object and run it with SendData
                             }
                         })
                     }
