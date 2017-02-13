@@ -8,4 +8,25 @@
 8. Host the site
 9. Add gravatar
 
+Functional requirements:
+
+1.	User registration with:
+o	Music preference (from a list of checkboxes: Rock, Pop, Jazz, Heavy Metal, Classical, Techno, etc.)  Alisa
+o	Add the username (should be unique) Alisa
+o	Picture/Avatar (from gravatar.com) Stefan
+
+2.	Retrieve music preferences from Spotify :
+o	Get a User’s Top Artists and Tracks
+o	Structure CSV data of personal playlists with songs
+o	Structure CSV data of Shazam playlist with songs
+o	Upload CSV file of personal playlists with songs
+o	Shazam playlist with songs to external web server
+
+3.	Test how many Spotify API calls are allowed per minute.
+
+4.	Escape all fields (e.g., quotes, commas) for CSV data (use doubleQuotes parameter in json2scv library)
+
+Non-functional requirements:
+1.	Internationalization of web GUI is preferred (Swedish, English) Stefan
+2.	MVC design ???
 
