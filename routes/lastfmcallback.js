@@ -8,6 +8,7 @@ var querystring = require('querystring');
 var lastfmapi = require('lastfmapi');
 var json2csv = require('json2csv');
 var fs = require('fs');
+var sendData = require('./sendData');
 
 var lfm = new lastfmapi({
     'api_key': '7265542ca35620eb114c1e04fc841a79',
@@ -16,9 +17,9 @@ var lfm = new lastfmapi({
 
 
 router.get('/', function(req, res, next) {
-    res.send(req.query.token);
+
     //console.log(req.session);
-    //res.render('index', { title: 'Assig 1', userName: req.session.userName || null, userSurname: req.session.userSurname || null, spotifySet: req.session.spotifySet || null});
+
     var lastfmtoken = req.query.token;
 
     lfm.authenticate(lastfmtoken, function (err, session) {
@@ -27,6 +28,17 @@ router.get('/', function(req, res, next) {
             res.end('Unauthorized');
 
         }
+        var fields = ['_id', 'name', 'surname', 'age', 'gender', 'music', 'spotifyID', 'email', 'lastFmId'];
+        User.findOneAndUpdate({$and: [{name: req.session.userName}, {surname: req.session.userSurname}]}, {lastFmId: session.username }, function(err, user) {
+            if (err) throw err;
+            // we have the updated user returned to us
+            console.log('user in DB: ' + user);
+            //sendData.sendData(req.session.userName, 'dataBase', 'form', fileds, users);
+        });
+        req.session.lastFmSet = session.username;
+        res.redirect("/");
+
+
 // TOP TRACKS
 
         request('http://ws.audioscrobbler.com/2.0/?method=user.gettoptracks&user='+session.username+'&api_key=7265542ca35620eb114c1e04fc841a79&format=json',function(error,response,body){

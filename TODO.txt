@@ -1,9 +1,9 @@
-1. Add LastFm session and use it for the UI
-2. Add LastFM ID to the DB
-3. Send the current DB as CSV
-4. Fix get playlist tracks
-5. Send playlist tracks
-6. Optimise spotifycallback
+1. Add LastFm session and use it for the UI - Done
+2. Add LastFM ID to the DB - Done
+3. Send the current DB as CSV - Done
+4. Fix get playlist tracks - Done
+5. Send playlist tracks - Done
+6. Optimise spotifycallback + go through all of the data
 7. Add different lang http://markocen.github.io/blog/i18n-for-node-application.html
 8. Host the site
 9. Add gravatar

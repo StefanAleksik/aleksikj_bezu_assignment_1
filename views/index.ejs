@@ -54,7 +54,7 @@
       </div>
 
       <%}
-      else { %>
+      else if (userName && spotifySet !== null && lastFmSet == null) { %>
       <div class="form-signup-spotify">
           <div id="login">
               <a href="/lastfmlogin" class="btn btn-lg btn-primary ">Log in with LastFM</a>
@@ -62,6 +62,9 @@
       </div>
 
      <% }
+     else { %>
+        <div class="form-signup-spotify"><h2 class="form-signin-heading">Thank you <3</h2></div>
+      <%}
       %>
 
 
