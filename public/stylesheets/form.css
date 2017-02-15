@@ -47,7 +47,10 @@ input, select {
     background-color: ivory;
 
 }
-.form-signup-spotify a{display: block;}
+.gravatar {
+    width: 99.37988% !important;
+}
+.form-signup-spotify-blue a{display: block;}
 
 @media (min-width: 768px){
     .form-inline .form-control{

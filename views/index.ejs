@@ -18,6 +18,7 @@
                       <option value="female">Female</option>
                       <option value="other">Other</option>
                   </select>
+                  <input type="email" class="form-control gravatar" placeholder="Gravatar email" name="gravatar">
               </div>
 
 
@@ -46,7 +47,8 @@
       </div>
 
       <%} else if (userName && spotifySet == null) {%>
-      <div class="form-signup-spotify">
+      <div class="form-signup-spotify"><img src= <%= gravatar%>></div>
+      <div class="form-signup-spotify-blue">
           <div id="login">
               <%= spotifySet%>
               <a href="/spotifylogin" class="btn btn-lg btn-primary ">Log in with Spotify</a>
@@ -55,7 +57,8 @@
 
       <%}
       else if (userName && spotifySet !== null && lastFmSet == null) { %>
-      <div class="form-signup-spotify">
+      <div class="form-signup-spotify"><img src= <%= gravatar%>></div>
+      <div class="form-signup-spotify-blue">
           <div id="login">
               <a href="/lastfmlogin" class="btn btn-lg btn-primary ">Log in with LastFM</a>
           </div>
@@ -63,7 +66,8 @@
 
      <% }
      else { %>
-        <div class="form-signup-spotify"><h2 class="form-signin-heading">Thank you <3</h2></div>
+      <div class="form-signup-spotify"><img src= <%= gravatar%>></div>
+      <div class="form-signup-spotify"><h2 class="form-signin-heading">Thank you <3</h2></div>
       <%}
       %>
 

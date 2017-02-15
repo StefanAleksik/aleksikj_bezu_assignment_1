@@ -8,7 +8,8 @@ var userSchema = new Schema({
     music: Array,
     spotifyID: String,
     email: String,
-    lastFmId: String
+    lastFmId: String,
+    gravatar: String
 }, {
     versionKey: false // You should be aware of the outcome after set to false
 });

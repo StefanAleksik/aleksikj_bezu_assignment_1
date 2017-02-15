@@ -13,7 +13,7 @@ Functional requirements:
 1.	User registration with:
 o	Music preference (from a list of checkboxes: Rock, Pop, Jazz, Heavy Metal, Classical, Techno, etc.)  Alisa
 o	Add the username (should be unique) Alisa
-o	Picture/Avatar (from gravatar.com) Stefan
+o	Picture/Avatar (from gravatar.com) Stefan - Done! I added gravatar hash to sessions and to DB. It can be seen in the index.ejs use stefan_aleksik@live.com (it has a set gravatar profile)
 
 2.	Retrieve music preferences from Spotify :
 o	Get a User’s Top Artists and Tracks

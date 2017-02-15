@@ -2,14 +2,17 @@ var express = require('express');
 var expressSession = require('express-session');
 var router = express.Router();
 var User = require('../models/User');
+var crypto = require('crypto');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Assig 1', userName: req.session.userName || null, userSurname: req.session.userSurname || null, spotifySet: req.session.spotifySet || null, lastFmSet: req.session.lastFmSet || null});
+    res.render('index', { title: 'Assig 1', userName: req.session.userName || null, userSurname: req.session.userSurname || null, spotifySet: req.session.spotifySet || null, lastFmSet: req.session.lastFmSet || null, gravatar: req.session.gravatar || null});
 });
 router.post('/adduser', function (req, res, next) {
     req.session.userName = req.body.name;
     req.session.userSurname = req.body.surname;
-   new User({name: req.body.name, surname: req.body.surname, age: req.body.age, gender: req.body.gender, music: req.body.music, spotifyID: null, email: null, lastFmId: null}).save(function(err) {
+    req.session.gravatar = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(req.body.gravatar).digest('hex') + '/.jpg';
+   new User({name: req.body.name, surname: req.body.surname, age: req.body.age, gender: req.body.gender, music: req.body.music, spotifyID: null, email: null, lastFmId: null, gravatar: crypto.createHash('md5').update(req.body.gravatar).digest('hex') || null}).save(function(err) {
        if (err) throw err;
 
        console.log('User created!');
