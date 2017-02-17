@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var SpotifyWebApi = require('spotify-web-api-node');
 var forEach = require('async-foreach').forEach;
 var crypto = require('crypto');
+var i18n = require('./routes/i18n');
+
 
 var db = require('./models/db');
 var User = require('./models/User')
@@ -22,7 +24,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.use(i18n);
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));

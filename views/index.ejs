@@ -6,43 +6,43 @@
       <div id="form_signup" class="form-signup">
           <form class="form-inline" name="adduser" method="post" action="/adduser">
               <div class="form-group">
-                  <h2 class="form-signin-heading">Please sign up</h2>
-                  <label for="name" class="sr-only">Name</label>
-                  <input type="text" class="form-control" placeholder="Name" name="name" required autofocus>
-                  <label for="surname" class="sr-only">Surname</label>
-                  <input type="text" class="form-control" placeholder="Surname" name="surname">
-                  <label class="sr-only" for="age">Age</label>
-                  <input class="form-control" type="number" placeholder="Age" name="age" min="15" max="100" required>
+                  <h2 class="form-signin-heading"><%= __('Please sign up')%></h2>
+                  <label for="name" class="sr-only"><%= __('Name')%></label>
+                  <input type="text" class="form-control" placeholder= <%= __('Name')%> name= "name" required autofocus>
+                  <label for="surname" class="sr-only"><%= __('Surname')%></label>
+                  <input type="text" class="form-control" placeholder= <%= __('Surname')%> name= "surname">
+                  <label class="sr-only" for="age"><%= __('Age')%></label>
+                  <input class="form-control" type="number" placeholder= <%= __('Age')%> name= "age" min="15" max="100" required>
                   <select class="form-control" name="gender" required>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
+                      <option value="male"><%= __('Male')%></option>
+                      <option value="female"><%= __('Female')%></option>
+                      <option value="other"><%= __('Other')%></option>
                   </select>
-                  <input type="email" class="form-control gravatar" placeholder="Gravatar email" name="gravatar">
+                  <input type="email" class="form-control gravatar" placeholder= <%= __('Gravatar email')%> name= "gravatar">
               </div>
 
 
               <legend>Music preference:</legend>
               <label class="radio-inline">
-                  <input type="checkbox" name="music" value="rock">Rock<br>
+                  <input type="checkbox" name="music" value="rock"><%= __('Rock')%><br>
               </label>
               <label class="radio-inline">
-                  <input type="checkbox" name="music" value="pop">Pop<br>
+                  <input type="checkbox" name="music" value="pop"><%= __('Pop')%><br>
               </label>
               <label class="radio-inline">
-                  <input type="checkbox" name="music" value="jazz">Jazz<br>
+                  <input type="checkbox" name="music" value="jazz"><%= __('Jazz')%><br>
               </label>
               <label class="radio-inline">
-                  <input type="checkbox" name="music" value="classical">Classical<br>
+                  <input type="checkbox" name="music" value="classical"><%= __('Classical')%><br>
               </label>
               <label class="radio-inline">
-                  <input type="checkbox" name="music" value="techno">Techno<br>
+                  <input type="checkbox" name="music" value="techno"><%= __('Techno')%><br>
               </label>
               <label class="radio-inline">
-                  <input type="checkbox" name="music" value="heavymetal">Heavy Metal<br>
+                  <input type="checkbox" name="music" value="heavymetal"><%= __('Heavy Metal')%><br>
               </label><br>
 
-              <button class="btn btn-lg btn-primary btn-block" type="submit">Submit form</button>
+              <button class="btn btn-lg btn-primary btn-block" type="submit"><%= __('Submit form')%></button>
           </form>
       </div>
 
@@ -51,7 +51,7 @@
       <div class="form-signup-spotify-blue">
           <div id="login">
               <%= spotifySet%>
-              <a href="/spotifylogin" class="btn btn-lg btn-primary ">Log in with Spotify</a>
+              <a href="/spotifylogin" class="btn btn-lg btn-primary "><%= __('Log in with Spotify')%></a>
           </div>
       </div>
 
@@ -60,14 +60,14 @@
       <div class="form-signup-spotify"><img src= <%= gravatar%>></div>
       <div class="form-signup-spotify-blue">
           <div id="login">
-              <a href="/lastfmlogin" class="btn btn-lg btn-primary ">Log in with LastFM</a>
+              <a href="/lastfmlogin" class="btn btn-lg btn-primary "><%= __('Log in with LastFM')%></a>
           </div>
       </div>
 
      <% }
      else { %>
       <div class="form-signup-spotify"><img src= <%= gravatar%>></div>
-      <div class="form-signup-spotify"><h2 class="form-signin-heading">Thank you <3</h2></div>
+      <div class="form-signup-spotify"><h2 class="form-signin-heading"><%= __('Thank you <3')%></h2></div>
       <%}
       %>
 

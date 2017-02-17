@@ -27,6 +27,6 @@ o	Shazam playlist with songs to external web server
 4.	Escape all fields (e.g., quotes, commas) for CSV data (use doubleQuotes parameter in json2scv library)
 
 Non-functional requirements:
-1.	Internationalization of web GUI is preferred (Swedish, English) Stefan
+1.	Internationalization of web GUI is preferred (Swedish, English) Stefan - Done! will need to test out with a swidish comp and to set the translation
 2.	MVC design ???
 
