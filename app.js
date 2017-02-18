@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var SpotifyWebApi = require('spotify-web-api-node');
 var forEach = require('async-foreach').forEach;
 var crypto = require('crypto');
-var i18n = require('./routes/i18n');
+var i18n = require('./models/i18n');
 
 
 var db = require('./models/db');

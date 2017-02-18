@@ -2,8 +2,22 @@
   <body>
 
   <div class="container">
+
+      <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Language/Språk
+              <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="/en">English</a></li>
+              <li><a href="/sw">Svenska</a></li>
+
+          </ul>
+      </div>
+
       <% if(userName == null){ %>
-      <div id="form_signup" class="form-signup">
+
+        <div id="form_signup" class="form-signup">
           <form class="form-inline" name="adduser" method="post" action="/adduser">
               <div class="form-group">
                   <h2 class="form-signin-heading"><%= __('Please sign up')%></h2>
@@ -22,7 +36,7 @@
               </div>
 
 
-              <legend>Music preference:</legend>
+              <legend><%= __('Music preference')%>:</legend>
               <label class="radio-inline">
                   <input type="checkbox" name="music" value="rock"><%= __('Rock')%><br>
               </label>

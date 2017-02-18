@@ -6,6 +6,7 @@ var crypto = require('crypto');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    res.setLocale(req.cookies.lang || 'en');
     res.render('index', { title: 'Assig 1', userName: req.session.userName || null, userSurname: req.session.userSurname || null, spotifySet: req.session.spotifySet || null, lastFmSet: req.session.lastFmSet || null, gravatar: req.session.gravatar || null});
 });
 router.post('/adduser', function (req, res, next) {
@@ -16,10 +17,20 @@ router.post('/adduser', function (req, res, next) {
        if (err) throw err;
 
        console.log('User created!');
+
    });
    res.redirect("/");
 });
 
+router.get('/sw', function (req, res) {
+    res.cookie('lang', 'sw');
+    res.redirect('/')
+});
+
+router.get('/en', function (req, res) {
+    res.cookie('lang', 'en');
+    res.redirect('/')
+});
 
 router.get('/thread', function(req, res) {
     User.find(function(err, threads) {
