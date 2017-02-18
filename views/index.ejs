@@ -19,28 +19,20 @@
                       <option value="other"><%= __('Other')%></option>
                   </select>
                   <input type="email" class="form-control gravatar" placeholder= <%= __('Gravatar email')%> name= "gravatar">
+
+                  <select  id="music-preferences" name="music"  multiple="multiple">
+                      <option value="rock"><%= __('Rock')%></option>
+                      <option value="pop"><%= __('Pop')%></option>
+                      <option value="jazz"><%= __('Jazz')%></option>
+                      <option value="classical"><%= __('Classical')%></option>
+                      <option value="heavymetal"><%= __('Heavy Metal')%></option>
+                      <option value="techno"><%= __('Techno')%></option>
+
+                  </select>
+
+
               </div>
 
-
-              <legend>Music preference:</legend>
-              <label class="radio-inline">
-                  <input type="checkbox" name="music" value="rock"><%= __('Rock')%><br>
-              </label>
-              <label class="radio-inline">
-                  <input type="checkbox" name="music" value="pop"><%= __('Pop')%><br>
-              </label>
-              <label class="radio-inline">
-                  <input type="checkbox" name="music" value="jazz"><%= __('Jazz')%><br>
-              </label>
-              <label class="radio-inline">
-                  <input type="checkbox" name="music" value="classical"><%= __('Classical')%><br>
-              </label>
-              <label class="radio-inline">
-                  <input type="checkbox" name="music" value="techno"><%= __('Techno')%><br>
-              </label>
-              <label class="radio-inline">
-                  <input type="checkbox" name="music" value="heavymetal"><%= __('Heavy Metal')%><br>
-              </label><br>
 
               <button class="btn btn-lg btn-primary btn-block" type="submit"><%= __('Submit form')%></button>
           </form>

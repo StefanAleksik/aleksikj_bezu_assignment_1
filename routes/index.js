@@ -12,6 +12,7 @@ router.post('/adduser', function (req, res, next) {
     req.session.userName = req.body.name;
     req.session.userSurname = req.body.surname;
     req.session.gravatar = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(req.body.gravatar).digest('hex') + '/.jpg';
+    console.log(req.body.music)
    new User({name: req.body.name, surname: req.body.surname, age: req.body.age, gender: req.body.gender, music: req.body.music, spotifyID: null, email: null, lastFmId: null, gravatar: crypto.createHash('md5').update(req.body.gravatar).digest('hex') || null}).save(function(err) {
        if (err) throw err;
 
