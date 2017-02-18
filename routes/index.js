@@ -6,7 +6,7 @@ var crypto = require('crypto');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Assig 1', error:req.session.error||null,userName: req.session.userName || null, userSurname: req.session.userSurname || null, spotifySet: req.session.spotifySet || null, lastFmSet: req.session.lastFmSet || null, gravatar: req.session.gravatar || null});
+    res.render('index', { title: 'Assig 1', error:req.session.error||null,userName: req.session.username || null, spotifySet: req.session.spotifySet || null, lastFmSet: req.session.lastFmSet || null, gravatar: req.session.gravatar || null});
 });
 router.post('/adduser', function (req, res, next) {
 
@@ -37,8 +37,8 @@ router.post('/adduser', function (req, res, next) {
                 }
                 else {
                     console.log('User created!');
-                    req.session.userName = req.body.name;
-                    req.session.userSurname = req.body.surname;
+                    req.session.username = req.body.username;
+
                     req.session.gravatar = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(req.body.gravatar).digest('hex') + '/.jpg';
 
                     res.redirect("/");
