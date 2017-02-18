@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     name: String,
     surname: String,
+    username:{type: String, lowercase: true, trim: true,minlength:5, maxlength:30},
     age: Number,
     gender: String,
     music: Array,
@@ -13,4 +14,7 @@ var userSchema = new Schema({
 }, {
     versionKey: false // You should be aware of the outcome after set to false
 });
+
+
+
 module.exports = mongoose.model('User', userSchema);
