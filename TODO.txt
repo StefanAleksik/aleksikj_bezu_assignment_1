@@ -16,7 +16,7 @@ o	Add the username (should be unique) Alisa - Done! should be tested more
 o	Picture/Avatar (from gravatar.com) Stefan - Done! I added gravatar hash to sessions and to DB. It can be seen in the index.ejs use stefan_aleksik@live.com (it has a set gravatar profile)
 
 2.	Retrieve music preferences from Spotify :
-o	Get a User’s Top Artists and Tracks Alisa
+o	Get a User’s Top Artists and Tracks Alisa Done
 o	Structure CSV data of personal playlists with songs
 o	Structure CSV data of Shazam playlist with songs
 o	Upload CSV file of personal playlists with songs

@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
         return spotifyApi.getMe();
     }).then(function (data) {
 
-        User.findOneAndUpdate({$and: [{name: req.session.userName}, {surname: req.session.userSurname}]  }, {  spotifyID: data.body.id, email: data.body.email }, function(err, user) {
+        User.findOneAndUpdate({username: req.session.username}, {  spotifyID: data.body.id, email: data.body.email }, function(err, user) {
             if (err) throw err;
             // we have the updated user returned to us
             //console.log(user);
@@ -114,6 +114,28 @@ router.get('/', function(req, res, next) {
                 console.log('Something went wrong!', err);
             });
 
+        //get user's top tracks
+        var usersTopTracks ={spotify_id: data.body.id ,topTracks: []};
+        getUsersTopTracks(0,50,usersTopTracks,function(){
+            //Data ready to be saved
+            console.log("Top tracks collected: " + usersTopTracks.topTracks.length)
+            console.log(req.session.username)
+            var fields = ["song_name","song_spotify_id","song_album_name","album_spotify_id","song_artist_name","song_artist_spotify_id"]
+            //sendData.sendData(req.session.username, 'spotify', 'top_tracks', fields, usersTopTracks.topTracks);
+
+        })
+        //get user's top artists
+        var usersTopArtists ={spotify_id: data.body.id ,topArtists: []};
+        getUsersTopArtists(0,50,usersTopArtists,function(){
+            //Data ready to be saved
+            console.log("Top artists collected:" + usersTopArtists.topArtists.length)
+            var fields = ["genres","artist_spotify_id","artist_name","artist_popularity"]
+            //sendData.sendData(req.session.username, 'spotify', 'top_artists', fields, usersTopArtists.topArtists);
+        })
+
+
+
+
         spotifyApi.getUserPlaylists(data.body.id)
             .then(function(playlist) {
                 //console.log(playlist.body.items)
@@ -146,6 +168,9 @@ router.get('/', function(req, res, next) {
                 });
                 //return playlist.body.items.map(function(p) { return p.id; });
             });
+
+
+
    }), function (err) {
         res.status(err.code);
         res.send(err.message);
@@ -178,6 +203,63 @@ function getPlaylistsWithSongs(index,playlists,spotify_id,callback){
             console.log('Something went wrong!', err);
         });
 
+}
+
+/**
+ * Get User's Top Tracks
+ * @param limit - The number of entities to return (max 50)
+ * @param offset - The index of the first entity to return.
+ * @param usersTopTracks - An array of results
+ */
+function getUsersTopTracks(limit,offset,usersTopTracks){
+    spotifyApi.getMyTopTracks({limit : limit, offset : offset})
+        .then(function(track) {
+
+            var total = track.body.total;
+            console.log("Total tracks" + total)
+            console.log(track.body)
+            for (var i =0; i < track.body.items.length; i++){
+                usersTopTracks.topTracks.push({song_name: track.body.items[i].track.name, song_spotify_id: track.body.items[i].track.id, song_album_name: track.body.items[i].track.album.name, album_spotify_id: track.body.items[i].track.album.id,
+                    song_artist_name: track.body.items[i].track.artists[0].name, song_artist_spotify_id: track.body.items[i].track.artists[0].id});
+            }
+
+
+            if (usersTopTracks.songs.length<total){
+                offset += limit;
+                getUsersTopTracks(offset,limit,usersTopTracks,callback)
+            }
+            else {
+                callback()
+            }
+
+        })
+}
+/**
+ * Get User's Top Artists
+ * @param limit - The number of entities to return (max 50)
+ * @param offset - The index of the first entity to return.
+ * @param usersTopArtists - An array of results
+ */
+function getUsersTopArtists(limit,offset,usersTopArtists){
+    spotifyApi.getMyTopTracks({limit : limit, offset : offset})
+        .then(function(result) {
+            var total = result.body.total;
+            console.log("Total artists " + total)
+
+            for (var i =0; i < result.body.items.length; i++){
+                usersTopArtists.topArtists.push({genres: result.body.items[i].genres, artist_spotify_id: result.body.items[i].id, artist_name: result.body.items[i].name, artist_popularity: result.body.items[i].popularity});
+            }
+
+
+            if (usersTopArtists.topArtists.length<total){
+                offset += limit;
+                getUsersTopArtists(offset,limit,usersTopArtists,callback)
+            }
+            else {
+                callback()
+            }
+
+        })
 }
 
 module.exports = router;
