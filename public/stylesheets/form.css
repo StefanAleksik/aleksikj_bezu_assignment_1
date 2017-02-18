@@ -51,6 +51,13 @@ input, select {
     width: 99.37988% !important;
 }
 
+.username{
+    width: 99.37988% !important;
+}
+
+.username-error{
+    border-color:red;
+}
 .form-signup-spotify-blue a{display: block;}
 
 @media (min-width: 768px){

@@ -2,6 +2,8 @@
   <body>
 
   <div class="container">
+
+
       <% if(userName == null){ %>
       <div id="form_signup" class="form-signup">
           <form class="form-inline" name="adduser" method="post" action="/adduser">
@@ -18,6 +20,15 @@
                       <option value="female"><%= __('Female')%></option>
                       <option value="other"><%= __('Other')%></option>
                   </select>
+
+                  <% if(error != null){ %>
+                    <span><%= error%></span>
+                    <input class="form-control username-error"  placeholder= <%= __('Username')%> name= "username"  required>
+
+                  <%} else { %>
+                     <input class="form-control username"  placeholder= <%= __('Username')%> name= "username"  required>
+                  <%}%>
+
                   <input type="email" class="form-control gravatar" placeholder= <%= __('Gravatar email')%> name= "gravatar">
 
                   <select  id="music-preferences" name="music"  multiple="multiple">
