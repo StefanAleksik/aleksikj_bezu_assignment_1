@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
             //console.log(user);
         });
         req.session.spotifySet = data.body.id;
-
+//console.log('Here here : '+data.body.id);
         res.redirect("/");
 
         spotifyApi.getFollowedArtists({ limit : 50 })
@@ -118,20 +118,20 @@ router.get('/', function(req, res, next) {
         var usersTopTracks ={spotify_id: data.body.id ,topTracks: []};
         getUsersTopTracks(0,50,usersTopTracks,function(){
             //Data ready to be saved
-            console.log("Top tracks collected: " + usersTopTracks.topTracks.length)
-            console.log(req.session.username)
-            var fields = ["song_name","song_spotify_id","song_album_name","album_spotify_id","song_artist_name","song_artist_spotify_id"]
+            console.log("Top tracks collected: " + usersTopTracks.topTracks.length);
+            console.log(req.session.username);
+            var fields = ["song_name","song_spotify_id","song_album_name","album_spotify_id","song_artist_name","song_artist_spotify_id"];
             //sendData.sendData(req.session.username, 'spotify', 'top_tracks', fields, usersTopTracks.topTracks);
 
-        })
+        });
         //get user's top artists
         var usersTopArtists ={spotify_id: data.body.id ,topArtists: []};
         getUsersTopArtists(0,50,usersTopArtists,function(){
             //Data ready to be saved
-            console.log("Top artists collected:" + usersTopArtists.topArtists.length)
-            var fields = ["genres","artist_spotify_id","artist_name","artist_popularity"]
+            console.log("Top artists collected:" + usersTopArtists.topArtists.length);
+            var fields = ["genres","artist_spotify_id","artist_name","artist_popularity"];
             //sendData.sendData(req.session.username, 'spotify', 'top_artists', fields, usersTopArtists.topArtists);
-        })
+        });
 
 
 
@@ -216,8 +216,8 @@ function getUsersTopTracks(limit,offset,usersTopTracks){
         .then(function(track) {
 
             var total = track.body.total;
-            console.log("Total tracks" + total)
-            console.log(track.body)
+            console.log("Total tracks" + total);
+            console.log(track.body);
             for (var i =0; i < track.body.items.length; i++){
                 usersTopTracks.topTracks.push({song_name: track.body.items[i].track.name, song_spotify_id: track.body.items[i].track.id, song_album_name: track.body.items[i].track.album.name, album_spotify_id: track.body.items[i].track.album.id,
                     song_artist_name: track.body.items[i].track.artists[0].name, song_artist_spotify_id: track.body.items[i].track.artists[0].id});
@@ -244,7 +244,7 @@ function getUsersTopArtists(limit,offset,usersTopArtists){
     spotifyApi.getMyTopTracks({limit : limit, offset : offset})
         .then(function(result) {
             var total = result.body.total;
-            console.log("Total artists " + total)
+            console.log("Total artists " + total);
 
             for (var i =0; i < result.body.items.length; i++){
                 usersTopArtists.topArtists.push({genres: result.body.items[i].genres, artist_spotify_id: result.body.items[i].id, artist_name: result.body.items[i].name, artist_popularity: result.body.items[i].popularity});

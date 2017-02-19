@@ -25,6 +25,12 @@
                 <input type="text" class="form-control" placeholder= <%= __('Name')%> name="name" required autofocus>
                 <label for="surname" class="sr-only"><%= __('Surname')%></label>
                 <input type="text" class="form-control" placeholder= <%= __('Surname')%> name="surname">
+                <% if(error != null){ %>
+                <input class="form-control username-error"  placeholder=<%= error %> name= "username"  required>
+                <%} else { %>
+                <input class="form-control"  placeholder= <%= __('Username')%> name= "username"  required>
+                <%}%>
+               <!-- <input type="text" class="form-control" placeholder= <%= __('Username')%> name="username">-->
                 <label class="sr-only" for="age"><%= __('Age')%></label>
                 <input class="form-control" type="number" placeholder= <%= __('Age')%> name="age" min="15" max="100" required>
                 <select class="form-control" name="gender" required>
@@ -32,7 +38,7 @@
                     <option value="female"><%= __('Female')%></option>
                     <option value="other"><%= __('Other')%></option>
                 </select>
-                <input type="email" class="form-control gravatar" placeholder= <%= __('Gravatar email')%> name="gravatar">
+                <input type="email" class="form-control" placeholder= <%= __('Gravatar email')%> name="gravatar">
 
                 <select  id="music-preferences" name="music"  multiple="multiple">
                     <option value="rock"><%= __('Rock')%></option>

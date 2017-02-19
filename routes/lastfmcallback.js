@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
 
         }
         var fields = ['_id', 'name', 'surname', 'age', 'gender', 'music', 'spotifyID', 'email', 'lastFmId'];
-        User.findOneAndUpdate({$and: [{name: req.session.userName}, {surname: req.session.userSurname}]}, {lastFmId: session.username }, function(err, user) {
+        User.findOneAndUpdate({username: req.session.username}, {lastFmId: session.username }, function(err, user) {
             if (err) throw err;
             // we have the updated user returned to us
             console.log('user in DB: ' + user);
