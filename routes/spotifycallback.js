@@ -145,24 +145,41 @@ router.get('/', function(req, res, next) {
                         playlistsNew.push({id:playlist.body.items[i].id, name:playlist.body.items[i].name, songs:[]})
                     }
                 }
+
                 getPlaylistsWithSongs(0,playlistsNew,data.body.id,function(){
                     //console.log("Done");
                     //console.log(playlistsNew.);
                     var fields = ['playlist_name', 'playlist_id', 'song_name', 'song_spotify_id', 'song_album_name', 'song_album_spotify_id',
                     'song_artist_name', 'song_artists_spotify_id'];
+
+                    var playlistSongs = [];
+                    var counter = 0;
                     for (var ii = 0; ii < playlistsNew.length; ii++){
-                        //console.log(playlistsNew[ii].songs[3]);
-                        var playlistSongs = [];
+
                         forEach(playlistsNew[ii].songs, function(e, index, arr){
                             /*console.log(playlistsNew[ii].name +' ' + e.song_name + index);*/
                             playlistSongs.push({playlist_name: playlistsNew[ii].name, playlist_id: playlistsNew[ii].id,
                                 song_name: e.song_name, song_spotify_id: e.song_spotify_id, song_album_name: e.song_album_name,
                                 song_album_spotify_id: e.song_album_spotify_id, song_artists_name: e.song_artists_name, song_artists_spotify_id: e.song_artists_spotify_id});
-                            if(playlistsNew[ii].songs.length == playlistSongs.length){
-                                console.log('playlist name: ' + playlistSongs[1].playlist_name + ', number of songs: ' + playlistSongs.length); // Create a json object and run it with SendData
-                                //sendData.sendData(data.bofy.id, 'spotify', 'user-playlist_' + playlistsNew[ii].name, fields, playlistSongs);
-                            }
+
                         })
+                        counter++
+                        if(counter == playlistsNew.length){
+                            //data ready to be send
+                            //sendData.sendData(req.session.username, 'spotify', 'user-playlists_with_songs', fields, playlistSongs);
+
+                            //send Shazam playlits if availbale
+
+                            var shazamPlaylist = hasShazamPlaylist(playlistsNew)
+                            if (shazamPlaylist != null){
+                                //send the Shazam playlist to the extrenal server
+                                console.log("User has Shazam playlist")
+                                //get songs from Shazam playlist
+                                var shazamPlaylistWithSongs = playlistSongs.filter(function(playlist){return playlist.playlist_name === "My Shazam Tracks"})
+                                console.log(shazamPlaylistWithSongs)
+                                //sendData.sendData(req.session.username, 'spotify', 'shazam-playlist', fields, shazamPlaylistWithSongs);
+                            }
+                        }
                     }
 
                 });
@@ -177,6 +194,22 @@ router.get('/', function(req, res, next) {
     }
 
 });
+
+/**
+ * This function checks if the user has Shazam playlist, if yes, returns true, if not returns false
+ * @param playlists - an JSON array of users playlists
+ */
+function hasShazamPlaylist(playlists){
+    var index = playlists.map(function(playlist){return playlist.name}).indexOf("My Shazam Tracks")
+
+    if (index == -1){
+        return null
+    }
+    else {
+        return playlists[index]
+    }
+
+}
 
 function getPlaylistsWithSongs(index,playlists,spotify_id,callback){
 

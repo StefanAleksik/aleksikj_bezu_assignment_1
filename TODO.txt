@@ -17,14 +17,14 @@ o	Picture/Avatar (from gravatar.com) Stefan - Done! I added gravatar hash to ses
 
 2.	Retrieve music preferences from Spotify :
 o	Get a User’s Top Artists and Tracks Alisa Done
-o	Structure CSV data of personal playlists with songs
-o	Structure CSV data of Shazam playlist with songs
-o	Upload CSV file of personal playlists with songs
-o	Shazam playlist with songs to external web server
+o	Structure CSV data of personal playlists with songs Stefan and Alisa Done
+o	Structure CSV data of Shazam playlist with songs Alisa Done
+o	Upload CSV file of personal playlists with songs Alisa Done
+o	Shazam playlist with songs to external web server Alisa Done
 
 3.	Test how many Spotify API calls are allowed per minute.
 
-4.	Escape all fields (e.g., quotes, commas) for CSV data (use doubleQuotes parameter in json2scv library)
+4.	Escape all fields (e.g., quotes, commas) for CSV data (use doubleQuotes parameter in json2scv library) Alisa
 
 Non-functional requirements:
 1.	Internationalization of web GUI is preferred (Swedish, English) Stefan - Done!
